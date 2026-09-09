@@ -65,6 +65,10 @@ function resolveAuthSecret() {
   if (isProductionBuild()) {
     return "build-time-placeholder-secret-min-32-chars!!";
   }
+  // Client bundles must never throw — AUTH_SECRET is server-only and unavailable in the browser.
+  if (typeof window !== "undefined") {
+    return "client-side-placeholder-secret-min-32-chars!";
+  }
   throw new Error(
     "AUTH_SECRET must be set in production (at least 32 characters). Add it in Vercel → Project → Settings → Environment Variables.",
   );

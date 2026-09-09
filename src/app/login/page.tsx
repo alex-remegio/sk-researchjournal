@@ -1,10 +1,13 @@
 import { Suspense } from "react";
-import LoginPage from "./LoginForm";
+import { PublicShell } from "@/components/public/Shell";
+import LoginForm from "./LoginForm";
 
 export default function LoginRoute() {
   return (
-    <Suspense fallback={<p className="p-8">Loading login…</p>}>
-      <LoginPage />
-    </Suspense>
+    <PublicShell>
+      <Suspense fallback={<p>Loading login…</p>}>
+        <LoginForm />
+      </Suspense>
+    </PublicShell>
   );
 }
