@@ -84,7 +84,12 @@ async function main() {
       data: { name: "Super Admin", email: "superadmin@journals.local", passwordHash, role: Role.SUPER_ADMIN },
     }),
     prisma.user.create({
-      data: { name: "Elena Ibarra", email: "eic@journals.local", passwordHash, role: Role.EDITOR_IN_CHIEF },
+      data: {
+        name: "Cyril John B. Domingo, PhD",
+        email: "eic@journals.local",
+        passwordHash,
+        role: Role.EDITOR_IN_CHIEF,
+      },
     }),
     prisma.user.create({
       data: { name: "Marcus Chen", email: "managing@journals.local", passwordHash, role: Role.MANAGING_EDITOR },
@@ -447,9 +452,9 @@ async function main() {
       {
         journalId: journal.id,
         userId: eic.id,
-        name: "Elena Ibarra",
+        name: "Cyril John B. Domingo, PhD",
         title: "Editor-in-Chief",
-        affiliation: "University of Barcelona",
+        affiliation: "Sultan Kudarat State University",
         email: "eic@journals.local",
         sortOrder: 1,
       },
