@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Source_Sans_3, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { env } from "@/lib/env";
+import { BRAND_NAME } from "@/lib/branding";
 import { AuthSessionProvider } from "@/components/auth/AuthSessionProvider";
 
 const sourceSans = Source_Sans_3({
@@ -16,13 +17,16 @@ const sourceSerif = Source_Serif_4({
   display: "swap",
 });
 
+const appName =
+  env.APP_NAME === "Journal Platform" || !env.APP_NAME.trim() ? BRAND_NAME : env.APP_NAME;
+
 export const metadata: Metadata = {
   metadataBase: new URL(env.APP_URL),
   title: {
-    default: env.APP_NAME,
-    template: `%s | ${env.APP_NAME}`,
+    default: appName,
+    template: `%s | ${appName}`,
   },
-  description: "Sultan Kudarat Research Journal of Education and Technology (SKRJET)",
+  description: BRAND_NAME,
   ...(env.GOOGLE_SITE_VERIFICATION
     ? { verification: { google: env.GOOGLE_SITE_VERIFICATION } }
     : {}),

@@ -2,9 +2,6 @@ import Link from "next/link";
 import { SearchBar } from "@/components/public/SearchBar";
 import { BRAND_NAME, BRAND_SHORT } from "@/lib/branding";
 
-/** Prefer env override when set; branding.ts is the safe client default. */
-const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || process.env.APP_NAME || BRAND_NAME;
-
 export function SiteHeader() {
   return (
     <header className="border-b border-ink-200 bg-ink-950 text-white">
@@ -12,10 +9,10 @@ export function SiteHeader() {
         <Link
           href="/"
           className="min-w-0 shrink font-serif tracking-tight"
-          title={APP_NAME}
+          title={BRAND_NAME}
         >
           <span className="block text-xl md:hidden">{BRAND_SHORT}</span>
-          <span className="hidden text-base leading-snug md:block lg:text-lg">{APP_NAME}</span>
+          <span className="hidden text-base leading-snug md:block lg:text-lg">{BRAND_NAME}</span>
         </Link>
         <div className="hidden min-w-0 flex-1 justify-center lg:flex">
           <SearchBar compact />
@@ -41,7 +38,7 @@ export function SiteFooter() {
     <footer className="mt-16 border-t border-ink-200 bg-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-ink-600 md:flex-row md:justify-between">
         <p>
-          © {new Date().getFullYear()} {APP_NAME}. Open scholarly publishing.
+          © {new Date().getFullYear()} {BRAND_NAME}. Open scholarly publishing.
         </p>
         <p>
           <Link className="underline" href="/robots.txt">
