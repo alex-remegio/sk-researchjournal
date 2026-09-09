@@ -14,6 +14,26 @@ import { DEFAULT_SETTINGS } from "../src/lib/settings";
 import { seedSearchFacetDemo } from "./seed-search-facets";
 import { seedComputingTechnologyArticle } from "./seed-jct-article";
 
+/** Neon’s default URI often includes channel_binding=require, which breaks many Node clients. */
+function normalizeDatabaseUrl(url: string | undefined) {
+  if (!url) return url;
+  return url
+    .replace(/([?&])channel_binding=require&?/g, "$1")
+    .replace(/[?&]$/, "")
+    .replace(/\?&/, "?");
+}
+
+const databaseUrl = normalizeDatabaseUrl(process.env.DATABASE_URL);
+if (databaseUrl) process.env.DATABASE_URL = databaseUrl;
+
+if (!process.env.DATABASE_URL?.trim()) {
+  console.error("DATABASE_URL is missing. Example:");
+  console.error(
+    '  DATABASE_URL="postgresql://USER:PASS@HOST/neondb?sslmode=require" npx prisma db seed',
+  );
+  process.exit(1);
+}
+
 const prisma = new PrismaClient();
 const DEV_PASSWORD = "DevPassword123!";
 
@@ -466,7 +486,12 @@ async function main() {
 
 main()
   .catch((error) => {
+    console.error("\nSeed failed.");
     console.error(error);
+    if (error instanceof Error && /P1001|Can't reach database/i.test(error.message)) {
+      console.error("\nTip: use Neon’s connection string with sslmode=require (no channel_binding).");
+      console.error("Prefer the pooled host (*-pooler.*) or the direct host from Neon → Connect.");
+    }
     process.exit(1);
   })
   .finally(async () => {
