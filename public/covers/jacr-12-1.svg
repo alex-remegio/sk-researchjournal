@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="560" viewBox="0 0 400 560" role="img" aria-label="JACR volume 12 issue 1 cover">
+  <rect width="400" height="560" fill="#7f1d1d"/>
+  <rect x="18" y="18" width="364" height="524" fill="none" stroke="#fef2f2" stroke-width="2"/>
+  <text x="200" y="150" text-anchor="middle" fill="#fef2f2" font-family="Georgia, serif" font-size="28">JACR</text>
+  <text x="200" y="250" text-anchor="middle" fill="#fecaca" font-family="Georgia, serif" font-size="16">Advances in Applied Computing</text>
+  <text x="200" y="330" text-anchor="middle" fill="#ffffff" font-family="Georgia, serif" font-size="22">Vol. 12 No. 1</text>
+  <text x="200" y="460" text-anchor="middle" fill="#fecaca" font-family="Georgia, serif" font-size="18">2026</text>
+</svg>

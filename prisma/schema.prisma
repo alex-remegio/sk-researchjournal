@@ -1,0 +1,572 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPER_ADMIN
+  EDITOR_IN_CHIEF
+  MANAGING_EDITOR
+  SECTION_EDITOR
+  AUTHOR
+  REVIEWER
+  READER
+}
+
+enum ArticleStatus {
+  DRAFT
+  SUBMITTED
+  FOR_REVIEW
+  REVISION_REQUIRED
+  REVISED
+  FOR_APPROVAL
+  APPROVED
+  READY_FOR_PUBLICATION
+  SCHEDULED
+  PUBLISHED
+  REJECTED
+  ARCHIVED
+}
+
+enum IssueStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ArticleType {
+  RESEARCH
+  REVIEW
+  SHORT_COMMUNICATION
+  EDITORIAL
+  CASE_STUDY
+  TECHNICAL_NOTE
+}
+
+enum FileType {
+  FINAL_PDF
+  SUPPLEMENTARY
+  THUMBNAIL
+  MANUSCRIPT
+}
+
+enum MetricType {
+  PAGE_VIEW
+  PDF_DOWNLOAD
+}
+
+enum AuditAction {
+  LOGIN
+  LOGOUT
+  LOGIN_FAILED
+  CREATE
+  UPDATE
+  DELETE
+  APPROVE
+  REJECT
+  PUBLISH
+  UNPUBLISH
+  ARCHIVE
+  ROLE_CHANGE
+  SETTINGS_UPDATE
+  FILE_UPLOAD
+  FILE_DELETE
+  SCREEN
+  ASSIGN_REVIEWER
+  SUBMIT_REVIEW
+  EDITORIAL_DECISION
+  SUBMIT_REVISION
+}
+
+enum ReviewAssignmentStatus {
+  INVITED
+  ACCEPTED
+  DECLINED
+  COMPLETED
+  WITHDRAWN
+}
+
+enum ReviewRecommendation {
+  ACCEPT
+  MINOR_REVISION
+  MAJOR_REVISION
+  REJECT
+}
+
+enum EditorialDecisionType {
+  SEND_TO_REVIEW
+  DESK_REJECT
+  ACCEPT
+  MINOR_REVISION
+  MAJOR_REVISION
+  REJECT
+}
+
+model User {
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique(map: "User_email_key")
+  passwordHash String    @map("password_hash")
+  role         Role      @default(READER)
+  active       Boolean   @default(true)
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  authorProfile     Author?
+  assignments       JournalUserAssignment[]
+  createdArticles   Article[]               @relation("CreatedBy")
+  approvedArticles  Article[]               @relation("ApprovedBy")
+  uploadedFiles     ArticleFile[]
+  auditLogs         AuditLog[]
+  announcements     Announcement[]
+  boardEntries         EditorialBoardMember[]
+  reviewAssignments    ReviewAssignment[]     @relation("Reviewer")
+  assignedReviews      ReviewAssignment[]     @relation("AssignedBy")
+  reviewReports        ReviewReport[]
+  editorialDecisions   EditorialDecision[]
+  authorRevisions      AuthorRevision[]
+
+  @@index([role, active], map: "User_role_active_idx")
+  @@map("users")
+}
+
+model Author {
+  id          String    @id @default(cuid())
+  userId      String?   @unique(map: "Author_userId_key") @map("user_id")
+  firstName   String    @map("first_name")
+  middleName  String?   @map("middle_name")
+  lastName    String    @map("last_name")
+  email       String
+  affiliation String
+  country     String
+  orcid       String?   @unique(map: "Author_orcid_key")
+  biography   String?   @db.Text
+  deletedAt   DateTime? @map("deleted_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user          User?                @relation(fields: [userId], references: [id], onDelete: SetNull, map: "Author_userId_fkey")
+  affiliations  AuthorAffiliation[]
+  articles      ArticleAuthor[]
+
+  @@index([lastName, firstName], map: "Author_lastName_firstName_idx")
+  @@index([email], map: "Author_email_idx")
+  @@map("authors")
+}
+
+model AuthorAffiliation {
+  id         String  @id @default(cuid())
+  authorId   String
+  name       String
+  country    String?
+  department String?
+  isPrimary  Boolean @default(false)
+
+  author Author @relation(fields: [authorId], references: [id], onDelete: Cascade, map: "AuthorAffiliation_authorId_fkey")
+
+  @@index([authorId])
+}
+
+model Journal {
+  id           String    @id @default(cuid())
+  name         String
+  abbreviation String
+  description  String    @db.Text
+  issnPrint    String?   @map("issn_print")
+  issnOnline   String?   @map("issn_online")
+  publisher    String
+  frequency    String
+  logoUrl      String?   @map("logo_url")
+  coverUrl     String?   @map("cover_url")
+  websiteSlug  String    @unique(map: "Journal_websiteSlug_key") @map("website_slug")
+  active       Boolean   @default(true)
+  deletedAt    DateTime? @map("deleted_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  issues         Issue[]
+  articles       Article[]
+  categories     Category[]
+  announcements  Announcement[]
+  editorialBoard EditorialBoardMember[]
+  assignments    JournalUserAssignment[]
+  settings       JournalSetting[]
+
+  @@index([active], map: "Journal_active_idx")
+  @@map("journals")
+}
+
+model Issue {
+  id              String      @id @default(cuid())
+  journalId       String      @map("journal_id")
+  volume          Int
+  issueNumber     Int         @map("issue_number")
+  title           String
+  year            Int
+  publicationDate DateTime?   @map("publication_date")
+  coverUrl        String?     @map("cover_url")
+  status          IssueStatus @default(DRAFT)
+  deletedAt       DateTime?   @map("deleted_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+
+  journal  Journal   @relation(fields: [journalId], references: [id], onDelete: Restrict, map: "Issue_journalId_fkey")
+  articles Article[]
+
+  @@unique([journalId, volume, issueNumber, year], map: "Issue_journalId_volume_issueNumber_year_key")
+  @@index([journalId, year], map: "Issue_journalId_year_idx")
+  @@index([status], map: "Issue_status_idx")
+  @@map("issues")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  journalId   String
+  name        String
+  slug        String
+  description String?   @db.Text
+  parentId    String?
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  journal  Journal    @relation(fields: [journalId], references: [id], onDelete: Cascade, map: "Category_journalId_fkey")
+  parent   Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull, map: "Category_parentId_fkey")
+  children Category[] @relation("CategoryTree")
+  articles Article[]
+  assignments JournalUserAssignment[]
+
+  @@unique([journalId, slug])
+  @@index([journalId])
+}
+
+model Article {
+  id              String        @id @default(cuid())
+  title           String
+  slug            String
+  abstract        String        @db.Text
+  articleType     ArticleType   @default(RESEARCH) @map("article_type")
+  categoryId      String?       @map("category_id")
+  doi             String?       @unique(map: "Article_doi_key")
+  journalId       String        @map("journal_id")
+  issueId         String?       @map("issue_id")
+  firstPage       String?       @map("first_page")
+  lastPage        String?       @map("last_page")
+  publicationDate DateTime?     @map("publication_date")
+  pdfUrl          String?       @map("pdf_url")
+  thumbnailUrl    String?       @map("thumbnail_url")
+  status          ArticleStatus @default(DRAFT)
+  edasPaperId     String?       @map("edas_paper_id")
+  createdById     String        @map("created_by_id")
+  approvedById    String?       @map("approved_by_id")
+  approvedAt      DateTime?     @map("approved_at")
+  publishedAt     DateTime?     @map("published_at")
+  deletedAt       DateTime?     @map("deleted_at")
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+
+  journal    Journal         @relation(fields: [journalId], references: [id], onDelete: Restrict, map: "Article_journalId_fkey")
+  issue      Issue?          @relation(fields: [issueId], references: [id], onDelete: Restrict, map: "Article_issueId_fkey")
+  category   Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull, map: "Article_categoryId_fkey")
+  createdBy  User            @relation("CreatedBy", fields: [createdById], references: [id], onDelete: Restrict, map: "Article_createdById_fkey")
+  approvedBy User?           @relation("ApprovedBy", fields: [approvedById], references: [id], onDelete: SetNull, map: "Article_approvedById_fkey")
+  authors    ArticleAuthor[]
+  keywords   Keyword[]
+  references Reference[]
+  files      ArticleFile[]
+  metrics    ArticleMetric[]
+  metricSessions MetricSession[]
+  reviewRounds       ReviewRound[]
+  reviewAssignments  ReviewAssignment[]
+  reviewReports      ReviewReport[]
+  editorialDecisions EditorialDecision[]
+  authorRevisions    AuthorRevision[]
+
+  @@unique([journalId, slug], map: "Article_journalId_slug_key")
+  @@index([status, publishedAt], map: "Article_status_publishedAt_idx")
+  @@index([journalId, status], map: "Article_journalId_status_idx")
+  @@index([issueId], map: "Article_issueId_idx")
+  @@index([categoryId], map: "Article_categoryId_idx")
+  @@index([edasPaperId], map: "Article_edasPaperId_idx")
+  @@index([createdById], map: "Article_createdById_idx")
+  @@map("articles")
+}
+
+model ArticleAuthor {
+  articleId       String  @map("article_id")
+  authorId        String  @map("author_id")
+  authorOrder     Int     @map("author_order")
+  corresponding   Boolean @default(false)
+  affiliationText String? @map("affiliation_text")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ArticleAuthor_articleId_fkey")
+  author  Author  @relation(fields: [authorId], references: [id], onDelete: Restrict, map: "ArticleAuthor_authorId_fkey")
+
+  @@id([articleId, authorId], map: "ArticleAuthor_pkey")
+  @@unique([articleId, authorOrder], map: "ArticleAuthor_articleId_authorOrder_key")
+  @@index([authorId], map: "ArticleAuthor_authorId_idx")
+  @@map("article_authors")
+}
+
+model Keyword {
+  id        String @id @default(cuid())
+  articleId String @map("article_id")
+  keyword   String
+  sortOrder Int    @default(0) @map("sort_order")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "Keyword_articleId_fkey")
+
+  @@unique([articleId, keyword], map: "Keyword_articleId_keyword_key")
+  @@index([keyword], map: "Keyword_keyword_idx")
+  @@map("keywords")
+}
+
+model Reference {
+  id             String  @id @default(cuid())
+  articleId      String  @map("article_id")
+  referenceText  String  @db.Text @map("reference_text")
+  doi            String?
+  url            String?
+  referenceOrder Int     @map("reference_order")
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "Reference_articleId_fkey")
+
+  @@unique([articleId, referenceOrder], map: "Reference_articleId_referenceOrder_key")
+  @@index([articleId], map: "Reference_articleId_idx")
+  @@map("references")
+}
+
+model ArticleFile {
+  id           String   @id @default(cuid())
+  articleId    String
+  fileType     FileType
+  originalName String
+  storageKey   String   @unique
+  publicUrl    String
+  mimeType     String
+  fileSize     Int
+  uploadedById String
+  createdAt    DateTime @default(now())
+
+  article    Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ArticleFile_articleId_fkey")
+  uploadedBy User    @relation(fields: [uploadedById], references: [id], onDelete: Restrict, map: "ArticleFile_uploadedById_fkey")
+
+  @@index([articleId, fileType])
+}
+
+model ArticleMetric {
+  id          String     @id @default(cuid())
+  articleId   String
+  metricType  MetricType
+  value       Int        @default(0)
+  recordedAt  DateTime   @default(now())
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ArticleMetric_articleId_fkey")
+
+  @@unique([articleId, metricType])
+}
+
+model MetricSession {
+  id             String     @id @default(cuid())
+  articleId      String
+  metricType     MetricType
+  sessionHash    String
+  lastRecordedAt DateTime   @default(now())
+
+  article Article @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "MetricSession_articleId_fkey")
+
+  @@unique([articleId, metricType, sessionHash])
+  @@index([lastRecordedAt])
+}
+
+model Announcement {
+  id          String    @id @default(cuid())
+  journalId   String
+  title       String
+  body        String    @db.Text
+  createdById String
+  publishedAt DateTime?
+  expiresAt   DateTime?
+  active      Boolean   @default(true)
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  journal   Journal @relation(fields: [journalId], references: [id], onDelete: Cascade, map: "Announcement_journalId_fkey")
+  createdBy User    @relation(fields: [createdById], references: [id], onDelete: Restrict, map: "Announcement_createdById_fkey")
+
+  @@index([journalId, active, publishedAt])
+}
+
+model EditorialBoardMember {
+  id          String    @id @default(cuid())
+  journalId   String
+  userId      String?
+  name        String
+  title       String
+  affiliation String
+  email       String?
+  orcid       String?
+  photoUrl    String?
+  biography   String?   @db.Text
+  sortOrder   Int       @default(0)
+  active      Boolean   @default(true)
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  journal Journal @relation(fields: [journalId], references: [id], onDelete: Cascade, map: "EditorialBoardMember_journalId_fkey")
+  user    User?   @relation(fields: [userId], references: [id], onDelete: SetNull, map: "EditorialBoardMember_userId_fkey")
+
+  @@index([journalId, sortOrder])
+}
+
+model JournalUserAssignment {
+  id         String  @id @default(cuid())
+  userId     String
+  journalId  String
+  role       Role
+  categoryId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "JournalUserAssignment_userId_fkey")
+  journal  Journal   @relation(fields: [journalId], references: [id], onDelete: Cascade, map: "JournalUserAssignment_journalId_fkey")
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade, map: "JournalUserAssignment_categoryId_fkey")
+
+  @@unique([userId, journalId, role, categoryId])
+  @@index([journalId, role])
+  @@index([userId])
+}
+
+model JournalSetting {
+  id        String   @id @default(cuid())
+  journalId String
+  key       String
+  value     String
+  updatedAt DateTime @updatedAt
+
+  journal Journal @relation(fields: [journalId], references: [id], onDelete: Cascade, map: "JournalSetting_journalId_fkey")
+
+  @@unique([journalId, key])
+}
+
+model AuditLog {
+  id         String      @id @default(cuid())
+  userId     String?
+  action     AuditAction
+  entityType String
+  entityId   String?
+  metadata   Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime    @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull, map: "AuditLog_userId_fkey")
+
+  @@index([entityType, entityId])
+  @@index([userId, createdAt])
+  @@index([action, createdAt])
+}
+
+model ReviewRound {
+  id          String    @id @default(cuid())
+  articleId   String
+  roundNumber Int
+  startedAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  article      Article             @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ReviewRound_articleId_fkey")
+  assignments  ReviewAssignment[]
+  reports      ReviewReport[]
+  decisions    EditorialDecision[]
+  revisions    AuthorRevision[]
+
+  @@unique([articleId, roundNumber])
+  @@index([articleId])
+}
+
+model ReviewAssignment {
+  id           String                 @id @default(cuid())
+  articleId    String
+  roundId      String
+  reviewerId   String
+  assignedById String
+  status       ReviewAssignmentStatus @default(INVITED)
+  invitedAt    DateTime               @default(now())
+  dueDate      DateTime?
+  completedAt  DateTime?
+  conflictDeclared Boolean            @default(false)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+
+  article    Article      @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ReviewAssignment_articleId_fkey")
+  round      ReviewRound  @relation(fields: [roundId], references: [id], onDelete: Cascade, map: "ReviewAssignment_roundId_fkey")
+  reviewer   User         @relation("Reviewer", fields: [reviewerId], references: [id], onDelete: Restrict, map: "ReviewAssignment_reviewerId_fkey")
+  assignedBy User         @relation("AssignedBy", fields: [assignedById], references: [id], onDelete: Restrict, map: "ReviewAssignment_assignedById_fkey")
+  report     ReviewReport?
+
+  @@unique([roundId, reviewerId])
+  @@index([reviewerId, status])
+  @@index([articleId])
+}
+
+model ReviewReport {
+  id                 String               @id @default(cuid())
+  assignmentId       String               @unique
+  articleId          String
+  roundId            String
+  reviewerId         String
+  recommendation     ReviewRecommendation
+  originality        String               @db.Text
+  significance       String               @db.Text
+  methodology        String               @db.Text
+  clarity            String               @db.Text
+  commentsToAuthor   String               @db.Text
+  commentsToEditor   String               @db.Text
+  submittedAt        DateTime             @default(now())
+
+  assignment ReviewAssignment @relation(fields: [assignmentId], references: [id], onDelete: Cascade, map: "ReviewReport_assignmentId_fkey")
+  article    Article          @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "ReviewReport_articleId_fkey")
+  round      ReviewRound      @relation(fields: [roundId], references: [id], onDelete: Cascade, map: "ReviewReport_roundId_fkey")
+  reviewer   User             @relation(fields: [reviewerId], references: [id], onDelete: Restrict, map: "ReviewReport_reviewerId_fkey")
+
+  @@index([articleId, roundId])
+}
+
+model EditorialDecision {
+  id              String                 @id @default(cuid())
+  articleId       String
+  roundId         String?
+  decidedById     String
+  decision        EditorialDecisionType
+  letterToAuthors String                 @db.Text
+  createdAt       DateTime               @default(now())
+
+  article   Article      @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "EditorialDecision_articleId_fkey")
+  round     ReviewRound? @relation(fields: [roundId], references: [id], onDelete: SetNull, map: "EditorialDecision_roundId_fkey")
+  decidedBy User         @relation(fields: [decidedById], references: [id], onDelete: Restrict, map: "EditorialDecision_decidedById_fkey")
+
+  @@index([articleId, createdAt])
+}
+
+model AuthorRevision {
+  id                   String   @id @default(cuid())
+  articleId            String
+  roundId              String
+  responseToReviewers  String   @db.Text
+  submittedById        String
+  submittedAt          DateTime @default(now())
+
+  article     Article     @relation(fields: [articleId], references: [id], onDelete: Cascade, map: "AuthorRevision_articleId_fkey")
+  round       ReviewRound @relation(fields: [roundId], references: [id], onDelete: Cascade, map: "AuthorRevision_roundId_fkey")
+  submittedBy User        @relation(fields: [submittedById], references: [id], onDelete: Restrict, map: "AuthorRevision_submittedById_fkey")
+
+  @@index([articleId, submittedAt])
+}
