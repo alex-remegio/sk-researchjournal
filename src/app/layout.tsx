@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     default: env.APP_NAME,
     template: `%s | ${env.APP_NAME}`,
   },
-  description: "Multi-journal academic publishing platform",
+  description: "Sultan Kudarat Research Journal of Education and Technology (SKRJET)",
   ...(env.GOOGLE_SITE_VERIFICATION
     ? { verification: { google: env.GOOGLE_SITE_VERIFICATION } }
     : {}),

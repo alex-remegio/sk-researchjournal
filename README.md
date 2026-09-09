@@ -1,4 +1,4 @@
-# Journal Platform
+# Sultan Kudarat Research Journal of Education and Technology (SKRJET)
 
 Production-ready multi-journal academic publishing system.
 
@@ -116,7 +116,7 @@ These passwords exist only in seed data. Never use them in production.
 | Reviewer | `reviewer@journals.local` | `DevPassword123!` |
 | Author | `author@journals.local` | `DevPassword123!` |
 
-Seeded public content: [Journal of Applied Computing Research](/journals/jacr)
+Seeded public content: [Sultan Kudarat Research Journal of Education and Technology](/journals/skrjet)
 
 ## Roles
 
@@ -142,7 +142,7 @@ Development uses `EMAIL_MODE=mock` (messages are logged, not delivered). For pro
 
 ```bash
 EMAIL_MODE=live
-EMAIL_FROM="Journal Platform <noreply@your-domain.edu>"
+EMAIL_FROM="SKRJET <noreply@your-domain.edu>"
 RESEND_API_KEY=re_xxx
 ```
 

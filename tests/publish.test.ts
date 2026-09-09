@@ -17,8 +17,8 @@ describe("article wizard validation", () => {
 
   it("validates DOI on the identifiers step", () => {
     expect(() => articleIdentifiersSchema.parse({ doi: "bad" })).toThrow();
-    expect(articleIdentifiersSchema.parse({ doi: "10.5555/jacr.1", edasPaperId: "EDAS-1" }).doi).toBe(
-      "10.5555/jacr.1",
+    expect(articleIdentifiersSchema.parse({ doi: "10.5555/skrjet.1", edasPaperId: "EDAS-1" }).doi).toBe(
+      "10.5555/skrjet.1",
     );
   });
 });
@@ -35,7 +35,7 @@ describe("publishing rules", () => {
     hasFinalPdf: true,
     firstPage: "1",
     lastPage: "8",
-    doi: "10.5555/jacr.1",
+    doi: "10.5555/skrjet.1",
     approvedAt: new Date(),
     status: "READY_FOR_PUBLICATION",
   };

@@ -3,7 +3,7 @@ import { isValidDoi, isValidOrcid, isValidIssn, isValidPageRange, normalizeOrcid
 
 describe("DOI validation", () => {
   it("accepts standard DOIs", () => {
-    expect(isValidDoi("10.5555/jacr.2026.001")).toBe(true);
+    expect(isValidDoi("10.5555/skrjet.2026.001")).toBe(true);
     expect(isValidDoi("10.1000/xyz123")).toBe(true);
   });
 

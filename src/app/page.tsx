@@ -59,11 +59,13 @@ export default async function HomePage() {
   return (
     <PublicShell>
       <section className="max-w-3xl">
-        <h1 className="font-serif text-4xl text-ink-950 md:text-5xl">Open academic journals</h1>
+        <h1 className="font-serif text-4xl text-ink-950 md:text-5xl">
+          Sultan Kudarat Research Journal of Education and Technology
+        </h1>
         <p className="mt-4 text-lg text-ink-700">
-          Browse peer-reviewed articles, current issues, and author profiles. Journals use a
-          single-blind peer review process: reviewers see author identities; authors do not see
-          reviewer identities.
+          SKRJET publishes peer-reviewed research in education and technology. Browse current
+          issues, archives, and author profiles. The journal uses a single-blind peer review
+          process: reviewers see author identities; authors do not see reviewer identities.
         </p>
         <SearchBar />
         <p className="mt-3 text-sm text-ink-600">

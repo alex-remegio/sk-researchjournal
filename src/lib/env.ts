@@ -3,7 +3,7 @@ import { z } from "zod";
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   APP_URL: z.string().url().default("http://localhost:3000"),
-  APP_NAME: z.string().default("Journal Platform"),
+  APP_NAME: z.string().default("Sultan Kudarat Research Journal of Education and Technology (SKRJET)"),
   DATABASE_URL: z.string().min(1).optional(),
   AUTH_SECRET: z.string().min(32),
   AUTH_COOKIE_NAME: z.string().default("journal_session"),
@@ -45,7 +45,10 @@ const envSchema = z.object({
   ORCID_CLIENT_SECRET: z.string().optional().default(""),
   GOOGLE_SITE_VERIFICATION: z.string().optional().default(""),
   EMAIL_MODE: z.enum(["mock", "live"]).default("mock"),
-  EMAIL_FROM: z.string().optional().default("Journal Platform <noreply@journals.local>"),
+  EMAIL_FROM: z
+    .string()
+    .optional()
+    .default("SKRJET <noreply@journals.local>"),
   RESEND_API_KEY: z.string().optional().default(""),
   RESEND_API_URL: z.string().optional().default("https://api.resend.com/emails"),
   METRIC_DEDUPE_WINDOW_SECONDS: z.coerce.number().int().positive().default(3600),

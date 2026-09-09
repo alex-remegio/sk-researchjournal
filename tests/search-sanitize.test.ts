@@ -46,10 +46,10 @@ describe("article search queries", () => {
       author: "Okoye",
       title: "workflow",
       year: 2026,
-      journalSlug: "jacr",
+      journalSlug: "skrjet",
       volume: 12,
       issue: 1,
-      category: "jacr/information-systems",
+      category: "skrjet/information-systems",
     });
     expect(where.status).toBe("PUBLISHED");
     expect(where.AND).toEqual(
@@ -58,7 +58,7 @@ describe("article search queries", () => {
         expect.objectContaining({
           keywords: { some: { keyword: expect.objectContaining({ contains: "metadata" }) } },
         }),
-        expect.objectContaining({ journal: expect.objectContaining({ websiteSlug: "jacr" }) }),
+        expect.objectContaining({ journal: expect.objectContaining({ websiteSlug: "skrjet" }) }),
         expect.objectContaining({
           issue: expect.objectContaining({ year: 2026, volume: 12, issueNumber: 1 }),
         }),

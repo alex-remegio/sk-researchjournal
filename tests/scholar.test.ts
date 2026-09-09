@@ -9,7 +9,7 @@ const article = {
   abstract: "<p>Abstract text</p>",
   articleType: ArticleType.RESEARCH,
   categoryId: null,
-  doi: "10.5555/jacr.2026.002",
+  doi: "10.5555/skrjet.2026.002",
   journalId: "j1",
   issueId: "i1",
   firstPage: "19",
@@ -28,16 +28,16 @@ const article = {
   updatedAt: new Date(),
   journal: {
     id: "j1",
-    name: "Journal of Applied Computing Research",
+    name: "Sultan Kudarat Research Journal of Education and Technology",
     abbreviation: "JACR",
     description: "",
     issnPrint: "2049-3630",
     issnOnline: "2049-3649",
-    publisher: "Journal Platform Press",
+    publisher: "Sultan Kudarat State University",
     frequency: "Quarterly",
     logoUrl: null,
     coverUrl: null,
-    websiteSlug: "jacr",
+    websiteSlug: "skrjet",
     active: true,
     deletedAt: null,
     createdAt: new Date(),
@@ -102,14 +102,14 @@ describe("Google Scholar metadata", () => {
     const map = Object.fromEntries(tags.map((tag) => [tag.name, tag.content]));
     expect(map.citation_title).toBe(article.title);
     expect(map.citation_author).toBe("Daniel R. Voss");
-    expect(map.citation_journal_title).toBe("Journal of Applied Computing Research");
+    expect(map.citation_journal_title).toBe("Sultan Kudarat Research Journal of Education and Technology");
     expect(map.citation_publication_date).toBe("2026/03/15");
     expect(map.citation_volume).toBe("12");
     expect(map.citation_issue).toBe("1");
     expect(map.citation_firstpage).toBe("19");
     expect(map.citation_lastpage).toBe("33");
-    expect(map.citation_pdf_url).toContain("/journals/jacr/articles/editorial-metadata-google-scholar/pdf");
-    expect(map.citation_doi).toBe("10.5555/jacr.2026.002");
+    expect(map.citation_pdf_url).toContain("/journals/skrjet/articles/editorial-metadata-google-scholar/pdf");
+    expect(map.citation_doi).toBe("10.5555/skrjet.2026.002");
   });
 
   it("generates one citation_author tag per database author", () => {
@@ -117,7 +117,7 @@ describe("Google Scholar metadata", () => {
       ...article,
       title: "AI Integration in Education",
       slug: "ai-integration-in-education",
-      doi: "10.5555/jacr.2026.004",
+      doi: "10.5555/skrjet.2026.004",
       firstPage: "34",
       lastPage: "48",
       authors: [
@@ -160,7 +160,7 @@ describe("Google Scholar metadata", () => {
     expect(tags.find((tag) => tag.name === "citation_volume")?.content).toBe("12");
     expect(tags.find((tag) => tag.name === "citation_issue")?.content).toBe("1");
     expect(tags.find((tag) => tag.name === "citation_pdf_url")?.content).toContain(
-      "/journals/jacr/articles/ai-integration-in-education/pdf",
+      "/journals/skrjet/articles/ai-integration-in-education/pdf",
     );
     expect(citationMeta(record).citation_author).toEqual(["Florlyn Mae C. Remegio", "Alex N. Remegio"]);
     expect(formatCitation({ ...record, journal: { ...record.journal, name: "Journal of Computing and Technology" }, issue: { ...record.issue!, volume: 1, issueNumber: 2 }, firstPage: "1", lastPage: "18", doi: "10.5555/jct.2026.001", title: "Artificial Intelligence Integration in Higher Education" })).toContain(

@@ -2,7 +2,7 @@
   "name": "journal-platform",
   "version": "1.0.0",
   "private": true,
-  "description": "Multi-journal academic publishing platform",
+  "description": "Sultan Kudarat Research Journal of Education and Technology (SKRJET)",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "prisma generate && next build",

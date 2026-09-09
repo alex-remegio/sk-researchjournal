@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { requireSession } from "@/lib/auth/session";
 import { canAccessAdmin, navItemsForRole } from "@/lib/auth/rbac";
 import { LogoutButton } from "@/components/admin/LogoutButton";
+import { BRAND_SHORT } from "@/lib/branding";
+import { env } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 
@@ -19,8 +21,8 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="flex min-h-screen flex-col md:flex-row">
         <aside className="w-full border-b border-ink-200 bg-ink-950 text-white md:min-h-screen md:w-64 md:border-b-0 md:border-r">
           <div className="px-5 py-5">
-            <Link href="/" className="font-serif text-lg">
-              Journal Platform
+            <Link href="/" className="font-serif text-lg" title={env.APP_NAME}>
+              {BRAND_SHORT}
             </Link>
             <p className="mt-2 text-xs text-ink-300">
               {user.name} · {user.role.replaceAll("_", " ")}

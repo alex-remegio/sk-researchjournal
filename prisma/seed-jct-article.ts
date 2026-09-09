@@ -85,7 +85,7 @@ export async function seedComputingTechnologyArticle(
           "<p>Journal of Computing and Technology publishes research in computing, education technology, and applied systems.</p>",
         issnPrint: "2049-8111",
         issnOnline: "2049-8112",
-        publisher: "Journal Platform Press",
+        publisher: "Sultan Kudarat State University",
         frequency: "Biannual",
         websiteSlug: "jct",
         active: true,
