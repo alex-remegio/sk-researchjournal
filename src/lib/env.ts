@@ -51,16 +51,37 @@ const envSchema = z.object({
   METRIC_DEDUPE_WINDOW_SECONDS: z.coerce.number().int().positive().default(3600),
 });
 
-function readEnv() {
-  const secret =
-    process.env.AUTH_SECRET ??
-    (process.env.NODE_ENV === "production"
-      ? undefined
-      : "dev-only-change-me-use-openssl-rand-base64-48-chars!!");
+function isProductionBuild() {
+  return process.env.NEXT_PHASE === "phase-production-build";
+}
 
+function resolveAuthSecret() {
+  const configured = process.env.AUTH_SECRET?.trim();
+  if (configured && configured.length >= 32) return configured;
+  if (process.env.NODE_ENV !== "production") {
+    return "dev-only-change-me-use-openssl-rand-base64-48-chars!!";
+  }
+  // Next.js imports route modules during `next build`; allow a placeholder only then.
+  if (isProductionBuild()) {
+    return "build-time-placeholder-secret-min-32-chars!!";
+  }
+  throw new Error(
+    "AUTH_SECRET must be set in production (at least 32 characters). Add it in Vercel → Project → Settings → Environment Variables.",
+  );
+}
+
+function resolveAppUrl() {
+  const configured = process.env.APP_URL?.trim() || process.env.AUTH_URL?.trim();
+  if (configured) return configured;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+}
+
+function readEnv() {
   return envSchema.parse({
     ...process.env,
-    AUTH_SECRET: secret,
+    AUTH_SECRET: resolveAuthSecret(),
+    APP_URL: resolveAppUrl(),
   });
 }
 
