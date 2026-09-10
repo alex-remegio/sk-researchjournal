@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { PublicShell } from "@/components/public/Shell";
 import { JournalNav } from "@/components/public/JournalNav";
+import { SKRJET_PEER_REVIEW } from "@/lib/content/skrjet";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -19,6 +20,8 @@ export default async function PeerReviewPolicyPage({ params }: { params: Promise
   });
   if (!journal) notFound();
 
+  const isSkrjet = slug === "skrjet";
+
   const steps = [
     {
       title: "1. Submission and initial screening",
@@ -26,15 +29,15 @@ export default async function PeerReviewPolicyPage({ params }: { params: Promise
     },
     {
       title: "2. Assignment of reviewers",
-      body: `The Editor-in-Chief or Associate Editor assigns anonymous reviewers with relevant expertise. Reviewers are selected for academic credentials, research experience, and the absence of conflicts of interest with the authors.`,
+      body: `The Editor-in-Chief or Managing Editor assigns at least two independent anonymous reviewers with relevant expertise. Reviewers are selected for academic credentials, research experience, and the absence of conflicts of interest with the authors.`,
     },
     {
-      title: "3. Single-blind review",
-      body: `Reviewers remain anonymous to authors. Author identities are disclosed to reviewers so they can give informed, constructive feedback. Reviewers assess originality, significance, methodology, clarity, and scholarly standards.`,
+      title: "3. Double-blind review",
+      body: `Author and reviewer identities are concealed from each other. Reviewers assess originality, methodological rigor, significance, and clarity without regard to author identity.`,
     },
     {
       title: "4. Reviewer recommendations",
-      body: `Each reviewer recommends acceptance, revision with specific improvements, or rejection, with substantive reasons and comments for the authors.`,
+      body: `Each reviewer recommends acceptance, minor or major revision, or rejection, with substantive reasons and comments for the authors.`,
     },
     {
       title: "5. Editorial decision",
@@ -56,11 +59,11 @@ export default async function PeerReviewPolicyPage({ params }: { params: Promise
       <article className="max-w-3xl">
         <p className="text-sm uppercase tracking-wide text-crimson-700">{journal.name}</p>
         <h1 className="mt-2 font-serif text-4xl">Peer review process</h1>
-        <p className="mt-2 font-medium text-ink-800">Journal policy: single-blind reviewing</p>
+        <p className="mt-2 font-medium text-ink-800">Journal policy: double-blind reviewing</p>
         <p className="mt-6 leading-7 text-ink-800">
-          {journal.name} uses a single-blind peer review process. Reviewers know who the authors
-          are; authors do not know who the reviewers are. This policy is the working editorial
-          workflow of the journal, not a statement of intent only.
+          {isSkrjet
+            ? SKRJET_PEER_REVIEW
+            : `${journal.name} uses a double-blind peer review process. Author and reviewer identities are concealed from each other. This policy is the working editorial workflow of the journal.`}
         </p>
         <ol className="mt-10 space-y-8">
           {steps.map((step) => (
@@ -71,8 +74,9 @@ export default async function PeerReviewPolicyPage({ params }: { params: Promise
           ))}
         </ol>
         <p className="mt-10 text-sm text-ink-600">
-          Corresponding authors submit through the editorial system. Assigned reviewers receive the
-          author list with the manuscript. Authors receive reviewer comments without reviewer names.
+          {journal.name} follows COPE guidelines. Authors must declare potential conflicts of
+          interest. Corresponding authors submit through the editorial system; reviewers and authors
+          remain anonymous to each other throughout review.
         </p>
       </article>
     </PublicShell>

@@ -11,6 +11,7 @@ import {
 } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { DEFAULT_SETTINGS } from "../src/lib/settings";
+import { SKRJET_DESCRIPTION_HTML, SKRJET_FOUNDING_BOARD } from "../src/lib/content/skrjet";
 import { seedSearchFacetDemo } from "./seed-search-facets";
 import { seedComputingTechnologyArticle } from "./seed-jct-article";
 
@@ -81,18 +82,28 @@ async function main() {
   const passwordHash = await bcrypt.hash(DEV_PASSWORD, 12);
   const [superAdmin, eic, managing, section, reviewer, authorUser] = await Promise.all([
     prisma.user.create({
-      data: { name: "Super Admin", email: "superadmin@journals.local", passwordHash, role: Role.SUPER_ADMIN },
+      data: {
+        name: "Alex Remegio, PhD",
+        email: "superadmin@journals.local",
+        passwordHash,
+        role: Role.SUPER_ADMIN,
+      },
     }),
     prisma.user.create({
       data: {
-        name: "Cyril John B. Domingo, PhD",
+        name: "Mildred F. Accad, PhD",
         email: "eic@journals.local",
         passwordHash,
         role: Role.EDITOR_IN_CHIEF,
       },
     }),
     prisma.user.create({
-      data: { name: "Marcus Chen", email: "managing@journals.local", passwordHash, role: Role.MANAGING_EDITOR },
+      data: {
+        name: "Cyril John A. Domingo, PhD",
+        email: "managing@journals.local",
+        passwordHash,
+        role: Role.MANAGING_EDITOR,
+      },
     }),
     prisma.user.create({
       data: { name: "Sofia Rahman", email: "section@journals.local", passwordHash, role: Role.SECTION_EDITOR },
@@ -109,12 +120,11 @@ async function main() {
     data: {
       name: "Sultan Kudarat Research Journal of Education and Technology",
       abbreviation: "SKRJET",
-      description:
-        "<p>SKRJET publishes original research in education, educational technology, and applied computing.</p>",
+      description: SKRJET_DESCRIPTION_HTML,
       issnPrint: "2049-3630",
       issnOnline: "2049-3649",
       publisher: "Sultan Kudarat State University",
-      frequency: "Quarterly",
+      frequency: "Bi-annual (June and December)",
       websiteSlug: "skrjet",
       active: true,
     },
@@ -124,12 +134,12 @@ async function main() {
     data: Object.entries(DEFAULT_SETTINGS).map(([key, value]) => ({ journalId: journal.id, key, value })),
   });
 
-  const [systems, software] = await Promise.all([
+  const [education, technology] = await Promise.all([
     prisma.category.create({
-      data: { journalId: journal.id, name: "Information Systems", slug: "information-systems" },
+      data: { journalId: journal.id, name: "Education", slug: "education" },
     }),
     prisma.category.create({
-      data: { journalId: journal.id, name: "Software Engineering", slug: "software-engineering" },
+      data: { journalId: journal.id, name: "Technology", slug: "technology" },
     }),
   ]);
 
@@ -137,7 +147,7 @@ async function main() {
     data: [
       { userId: eic.id, journalId: journal.id, role: Role.EDITOR_IN_CHIEF },
       { userId: managing.id, journalId: journal.id, role: Role.MANAGING_EDITOR },
-      { userId: section.id, journalId: journal.id, role: Role.SECTION_EDITOR, categoryId: systems.id },
+      { userId: section.id, journalId: journal.id, role: Role.SECTION_EDITOR, categoryId: education.id },
       { userId: reviewer.id, journalId: journal.id, role: Role.REVIEWER },
     ],
   });
@@ -353,7 +363,7 @@ async function main() {
     title: "A reproducible workflow for multi-journal scholarly publishing",
     slug: "reproducible-workflow-multi-journal-publishing",
     issueId: issue1.id,
-    categoryId: systems.id,
+    categoryId: education.id,
     doi: "10.5555/skrjet.2026.001",
     pages: ["1", "18"],
     edasPaperId: "EDAS-1001",
@@ -363,7 +373,7 @@ async function main() {
     title: "Editorial metadata and Google Scholar citation tagging",
     slug: "editorial-metadata-google-scholar",
     issueId: issue1.id,
-    categoryId: software.id,
+    categoryId: technology.id,
     doi: "10.5555/skrjet.2026.002",
     pages: ["19", "33"],
     edasPaperId: "EDAS-1002",
@@ -373,7 +383,7 @@ async function main() {
     title: "Section-aware access control in academic publishing systems",
     slug: "section-aware-access-control",
     issueId: issue2.id,
-    categoryId: systems.id,
+    categoryId: education.id,
     doi: "10.5555/skrjet.2026.003",
     pages: ["1", "15"],
     edasPaperId: "EDAS-1003",
@@ -383,7 +393,7 @@ async function main() {
     title: "AI Integration in Education",
     slug: "ai-integration-in-education",
     issueId: issue1.id,
-    categoryId: software.id,
+    categoryId: technology.id,
     doi: "10.5555/skrjet.2026.004",
     pages: ["34", "48"],
     edasPaperId: "EDAS-1004",
@@ -397,7 +407,7 @@ async function main() {
       abstract:
         "<p>This submitted manuscript is used to demonstrate initial screening, reviewer assignment, and editorial decision under a single-blind policy.</p>",
       articleType: ArticleType.RESEARCH,
-      categoryId: systems.id,
+      categoryId: education.id,
       journalId: journal.id,
       status: ArticleStatus.FOR_REVIEW,
       createdById: authorUser.id,
@@ -448,24 +458,23 @@ async function main() {
   });
 
   await prisma.editorialBoardMember.createMany({
-    data: [
-      {
-        journalId: journal.id,
-        userId: eic.id,
-        name: "Cyril John B. Domingo, PhD",
-        title: "Editor-in-Chief",
-        affiliation: "Sultan Kudarat State University",
-        email: "eic@journals.local",
-        sortOrder: 1,
-      },
-      {
-        journalId: journal.id,
-        name: "Hiroshi Tanaka",
-        title: "Associate Editor",
-        affiliation: "Kyoto University",
-        sortOrder: 2,
-      },
-    ],
+    data: SKRJET_FOUNDING_BOARD.map((member) => ({
+      journalId: journal.id,
+      userId:
+        member.title === "Editor-in-Chief"
+          ? eic.id
+          : member.title === "Managing Editor"
+            ? managing.id
+            : member.title === "Super Admin"
+              ? superAdmin.id
+              : null,
+      name: member.name,
+      title: member.title,
+      affiliation: member.affiliation,
+      email: member.email ?? null,
+      biography: member.biography ?? null,
+      sortOrder: member.sortOrder,
+    })),
   });
 
   await seedSearchFacetDemo(prisma, {

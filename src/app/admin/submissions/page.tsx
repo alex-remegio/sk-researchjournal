@@ -19,8 +19,8 @@ export default async function SubmissionsPage() {
         <div>
           <h1 className="font-serif text-3xl">My submissions</h1>
           <p className="mt-2 text-ink-600">
-            After screening, manuscripts enter single-blind review. Reviewer names are never shown to
-            authors. Referee reports are handled in EDAS.
+            After screening, manuscripts enter double-blind review. Author and reviewer identities
+            remain concealed from each other. Referee reports are handled in EDAS.
           </p>
         </div>
         <NewArticleButton journals={journals} />

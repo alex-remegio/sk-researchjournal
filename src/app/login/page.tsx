@@ -30,7 +30,7 @@ export default async function LoginRoute() {
                 Editorial accounts manage peer review, acceptance, and publication.
               </li>
               <li className="border border-ink-200 bg-white/80 px-4 py-3">
-                Single-blind review: reviewers see authors; authors do not see reviewers.
+                Double-blind review: author and reviewer identities remain concealed from each other.
               </li>
               <li className="border border-ink-200 bg-white/80 px-4 py-3">
                 Need help? Return to the{" "}

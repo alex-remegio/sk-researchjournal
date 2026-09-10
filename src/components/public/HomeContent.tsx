@@ -43,8 +43,8 @@ export function HomeHero({ compact = false }: { compact?: boolean }) {
       </h1>
       <p className={`mt-4 text-ink-700 ${compact ? "text-base" : "text-lg"}`}>
         SKRJET publishes peer-reviewed research in education and technology. Browse current issues,
-        archives, and author profiles. The journal uses a single-blind peer review process: reviewers
-        see author identities; authors do not see reviewer identities.
+        archives, and author profiles. The journal uses a double-blind peer review process and is
+        published bi-annually by Sultan Kudarat State University.
       </p>
       <SearchBar />
       <p className="mt-3 text-sm text-ink-600">

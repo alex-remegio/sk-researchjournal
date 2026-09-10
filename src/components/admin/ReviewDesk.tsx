@@ -35,7 +35,7 @@ export function ReviewDesk({ packet, reviewers, canScreen, canDecide }: ReviewDe
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-sm uppercase text-crimson-700">Single-blind peer review</p>
+        <p className="text-sm uppercase text-crimson-700">Double-blind peer review</p>
         <h1 className="font-serif text-3xl">{packet.title}</h1>
         <p className="mt-2 text-ink-600">
           {packet.journal.name} · {String(packet.status).replaceAll("_", " ")}
