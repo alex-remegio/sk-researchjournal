@@ -232,8 +232,8 @@ export async function seedComputingTechnologyArticle(
 async function main() {
   const prisma = new PrismaClient();
   try {
-    const managing = await prisma.user.findFirst({ where: { email: "managing@journals.local" } });
-    const eic = await prisma.user.findFirst({ where: { email: "eic@journals.local" } });
+    const managing = await prisma.user.findFirst({ where: { email: "managing@sksu.edu.ph" } });
+    const eic = await prisma.user.findFirst({ where: { email: "eic@sksu.edu.ph" } });
     if (!managing || !eic) throw new Error("Seed the main catalog first.");
     await seedComputingTechnologyArticle(prisma, { managingId: managing.id, eicId: eic.id });
     console.log("Journal of Computing and Technology article is ready.");

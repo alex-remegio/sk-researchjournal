@@ -84,7 +84,7 @@ async function main() {
     prisma.user.create({
       data: {
         name: "Alex Remegio, PhD",
-        email: "superadmin@journals.local",
+        email: "superadmin@sksu.edu.ph",
         passwordHash,
         role: Role.SUPER_ADMIN,
       },
@@ -92,7 +92,7 @@ async function main() {
     prisma.user.create({
       data: {
         name: "Mildred F. Accad, PhD",
-        email: "eic@journals.local",
+        email: "eic@sksu.edu.ph",
         passwordHash,
         role: Role.EDITOR_IN_CHIEF,
       },
@@ -100,19 +100,19 @@ async function main() {
     prisma.user.create({
       data: {
         name: "Cyril John A. Domingo, PhD",
-        email: "managing@journals.local",
+        email: "managing@sksu.edu.ph",
         passwordHash,
         role: Role.MANAGING_EDITOR,
       },
     }),
     prisma.user.create({
-      data: { name: "Sofia Rahman", email: "section@journals.local", passwordHash, role: Role.SECTION_EDITOR },
+      data: { name: "Sofia Rahman", email: "section@sksu.edu.ph", passwordHash, role: Role.SECTION_EDITOR },
     }),
     prisma.user.create({
-      data: { name: "Priya Nair", email: "reviewer@journals.local", passwordHash, role: Role.REVIEWER },
+      data: { name: "Priya Nair", email: "reviewer@sksu.edu.ph", passwordHash, role: Role.REVIEWER },
     }),
     prisma.user.create({
-      data: { name: "Amina Okoye", email: "author@journals.local", passwordHash, role: Role.AUTHOR },
+      data: { name: "Amina Okoye", email: "author@sksu.edu.ph", passwordHash, role: Role.AUTHOR },
     }),
   ]);
 
@@ -490,12 +490,12 @@ async function main() {
 
   console.log("Seed complete.");
   console.log("Development logins (do not use in production):");
-  console.log(`  superadmin@journals.local / ${DEV_PASSWORD}`);
-  console.log(`  eic@journals.local / ${DEV_PASSWORD}`);
-  console.log(`  managing@journals.local / ${DEV_PASSWORD}`);
-  console.log(`  section@journals.local / ${DEV_PASSWORD}`);
-  console.log(`  reviewer@journals.local / ${DEV_PASSWORD}`);
-  console.log(`  author@journals.local / ${DEV_PASSWORD}`);
+  console.log(`  superadmin@sksu.edu.ph / ${DEV_PASSWORD}`);
+  console.log(`  eic@sksu.edu.ph / ${DEV_PASSWORD}`);
+  console.log(`  managing@sksu.edu.ph / ${DEV_PASSWORD}`);
+  console.log(`  section@sksu.edu.ph / ${DEV_PASSWORD}`);
+  console.log(`  reviewer@sksu.edu.ph / ${DEV_PASSWORD}`);
+  console.log(`  author@sksu.edu.ph / ${DEV_PASSWORD}`);
 }
 
 main()

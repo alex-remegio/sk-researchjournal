@@ -58,7 +58,15 @@ export default function LoginForm({ embedded = false }: { embedded?: boolean }) 
       <form className="space-y-4 px-5 py-5" onSubmit={onSubmit}>
         <div>
           <Label htmlFor="email">Email</Label>
-          <Input id="email" name="email" type="email" required autoComplete="username" className="mt-1" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autoComplete="username"
+            placeholder="name@sksu.edu.ph"
+            className="mt-1"
+          />
         </div>
         <div>
           <Label htmlFor="password">Password</Label>

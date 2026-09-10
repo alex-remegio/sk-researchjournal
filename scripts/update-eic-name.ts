@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 const NAME = "Cyril John B. Domingo, PhD";
-const EMAIL = "eic@journals.local";
+const EMAIL = "eic@sksu.edu.ph";
 
 async function main() {
   const user = await prisma.user.updateMany({

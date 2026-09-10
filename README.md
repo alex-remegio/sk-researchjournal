@@ -109,12 +109,12 @@ These passwords exist only in seed data. Never use them in production.
 
 | Role | Email | Password |
 | --- | --- | --- |
-| Super Admin | `superadmin@journals.local` | `DevPassword123!` |
-| Editor-in-Chief | `eic@journals.local` | `DevPassword123!` |
-| Managing Editor | `managing@journals.local` | `DevPassword123!` |
-| Section Editor | `section@journals.local` | `DevPassword123!` |
-| Reviewer | `reviewer@journals.local` | `DevPassword123!` |
-| Author | `author@journals.local` | `DevPassword123!` |
+| Super Admin | `superadmin@sksu.edu.ph` | `DevPassword123!` |
+| Editor-in-Chief | `eic@sksu.edu.ph` | `DevPassword123!` |
+| Managing Editor | `managing@sksu.edu.ph` | `DevPassword123!` |
+| Section Editor | `section@sksu.edu.ph` | `DevPassword123!` |
+| Reviewer | `reviewer@sksu.edu.ph` | `DevPassword123!` |
+| Author | `author@sksu.edu.ph` | `DevPassword123!` |
 
 Seeded public content: [Sultan Kudarat Research Journal of Education and Technology](/journals/skrjet)
 

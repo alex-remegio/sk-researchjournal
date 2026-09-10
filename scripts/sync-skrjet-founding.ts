@@ -30,21 +30,21 @@ async function main() {
   });
 
   await prisma.user.updateMany({
-    where: { email: "eic@journals.local" },
+    where: { email: "eic@sksu.edu.ph" },
     data: { name: "Mildred F. Accad, PhD", role: "EDITOR_IN_CHIEF" },
   });
   await prisma.user.updateMany({
-    where: { email: "managing@journals.local" },
+    where: { email: "managing@sksu.edu.ph" },
     data: { name: "Cyril John A. Domingo, PhD", role: "MANAGING_EDITOR" },
   });
   await prisma.user.updateMany({
-    where: { email: "superadmin@journals.local" },
+    where: { email: "superadmin@sksu.edu.ph" },
     data: { name: "Alex Remegio, PhD", role: "SUPER_ADMIN" },
   });
 
-  const eic = await prisma.user.findFirst({ where: { email: "eic@journals.local" } });
-  const managing = await prisma.user.findFirst({ where: { email: "managing@journals.local" } });
-  const superAdmin = await prisma.user.findFirst({ where: { email: "superadmin@journals.local" } });
+  const eic = await prisma.user.findFirst({ where: { email: "eic@sksu.edu.ph" } });
+  const managing = await prisma.user.findFirst({ where: { email: "managing@sksu.edu.ph" } });
+  const superAdmin = await prisma.user.findFirst({ where: { email: "superadmin@sksu.edu.ph" } });
 
   await prisma.editorialBoardMember.deleteMany({ where: { journalId: journal.id } });
   await prisma.editorialBoardMember.createMany({

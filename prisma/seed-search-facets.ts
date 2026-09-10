@@ -247,8 +247,8 @@ export async function seedSearchFacetDemo(
 async function main() {
   const prisma = new PrismaClient();
   try {
-    const managing = await prisma.user.findFirst({ where: { email: "managing@journals.local" } });
-    const eic = await prisma.user.findFirst({ where: { email: "eic@journals.local" } });
+    const managing = await prisma.user.findFirst({ where: { email: "managing@sksu.edu.ph" } });
+    const eic = await prisma.user.findFirst({ where: { email: "eic@sksu.edu.ph" } });
     const authors = await prisma.author.findMany({ orderBy: { createdAt: "asc" }, take: 2 });
     if (!managing || !eic || !authors.length) {
       throw new Error("Seed the main catalog first, then run this demo facet seed.");

@@ -48,7 +48,7 @@ const envSchema = z.object({
   EMAIL_FROM: z
     .string()
     .optional()
-    .default("SKRJET <noreply@journals.local>"),
+    .default("SKRJET <noreply@sksu.edu.ph>"),
   RESEND_API_KEY: z.string().optional().default(""),
   RESEND_API_URL: z.string().optional().default("https://api.resend.com/emails"),
   METRIC_DEDUPE_WINDOW_SECONDS: z.coerce.number().int().positive().default(3600),
