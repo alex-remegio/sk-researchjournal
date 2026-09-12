@@ -7,7 +7,9 @@ export function JournalNav({ slug, name }: { slug: string; name: string }) {
     ["Current issue", `/journals/${slug}/current`],
     ["Archive", `/journals/${slug}/archive`],
     ["Editorial board", `/journals/${slug}/board`],
-    ["Categories", `/journals/${slug}#categories`],
+    ["For authors", `/journals/${slug}/for-authors`],
+    ["For reviewers", `/journals/${slug}/for-reviewers`],
+    ["Editorial workflow", `/journals/${slug}/editorial-workflow`],
     ["Peer review", `/journals/${slug}/peer-review`],
     ["Announcements", `/journals/${slug}/announcements`],
   ];

@@ -32,7 +32,15 @@ export function limitForFileType(
   settings: Awaited<ReturnType<typeof getJournalSettings>>,
   fileType: FileType,
 ) {
-  if (fileType === FileType.FINAL_PDF || fileType === FileType.MANUSCRIPT) return settings.maxPdfBytes;
+  if (
+    fileType === FileType.FINAL_PDF ||
+    fileType === FileType.MANUSCRIPT ||
+    fileType === FileType.COVER_LETTER ||
+    fileType === FileType.TITLE_PAGE ||
+    fileType === FileType.ANONYMOUS_MANUSCRIPT
+  ) {
+    return settings.maxPdfBytes;
+  }
   if (fileType === FileType.THUMBNAIL) return settings.maxThumbnailBytes;
   return settings.maxSupplementaryBytes;
 }

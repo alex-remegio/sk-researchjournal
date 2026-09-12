@@ -36,7 +36,15 @@ export const articleTypeSchema = z.enum([
 ]);
 
 export const issueStatusSchema = z.enum(["DRAFT", "SCHEDULED", "PUBLISHED", "ARCHIVED"]);
-export const fileTypeSchema = z.enum(["FINAL_PDF", "SUPPLEMENTARY", "THUMBNAIL", "MANUSCRIPT"]);
+export const fileTypeSchema = z.enum([
+  "FINAL_PDF",
+  "SUPPLEMENTARY",
+  "THUMBNAIL",
+  "MANUSCRIPT",
+  "COVER_LETTER",
+  "TITLE_PAGE",
+  "ANONYMOUS_MANUSCRIPT",
+]);
 
 export const loginSchema = z.object({
   email: z.string().email().max(255),

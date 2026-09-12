@@ -39,6 +39,18 @@ export default async function JournalHome({ params }: { params: Promise<{ slug: 
         <Link className="underline" href={`/journals/${slug}/about`}>
           About
         </Link>
+        <Link className="underline" href={`/journals/${slug}/for-authors`}>
+          For authors
+        </Link>
+        <Link className="underline" href={`/journals/${slug}/for-reviewers`}>
+          For reviewers
+        </Link>
+        <Link className="underline" href={`/journals/${slug}/editorial-workflow`}>
+          Editorial workflow
+        </Link>
+        <Link className="underline" href="/docs/SKRJET_Role-Based_Guide.pdf">
+          Role guide (PDF)
+        </Link>
       </div>
 
       {current ? (

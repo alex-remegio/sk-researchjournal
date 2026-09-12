@@ -301,7 +301,17 @@ export function ArticleWizard({
     step,
   ]);
 
-  async function upload(fileType: "FINAL_PDF" | "SUPPLEMENTARY" | "THUMBNAIL", file: File) {
+  async function upload(
+    fileType:
+      | "FINAL_PDF"
+      | "SUPPLEMENTARY"
+      | "THUMBNAIL"
+      | "COVER_LETTER"
+      | "TITLE_PAGE"
+      | "ANONYMOUS_MANUSCRIPT"
+      | "MANUSCRIPT",
+    file: File,
+  ) {
     await fetch("/api/auth/csrf");
     const form = new FormData();
     form.append("file", file);
@@ -783,11 +793,33 @@ export function ArticleWizard({
 
         {step === 4 ? (
           <div className="mt-6 space-y-4">
+            <div className="border border-ink-200 bg-ink-50 p-4 text-sm text-ink-700">
+              <p className="font-medium text-ink-950">SKRJET four-file submission package</p>
+              <p className="mt-2">
+                Cover Letter and Title Page are visible to editors only. The Anonymous Manuscript is
+                what reviewers see. Do not upload the Title Page as the Anonymous Manuscript.
+              </p>
+            </div>
             {(
               [
-                ["FINAL_PDF", "Final PDF", "application/pdf"],
-                ["SUPPLEMENTARY", "Supplementary file", undefined],
-                ["THUMBNAIL", "Thumbnail", "image/png,image/jpeg,image/webp"],
+                [
+                  "COVER_LETTER",
+                  "File 1 — Cover Letter (required)",
+                  ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ],
+                [
+                  "TITLE_PAGE",
+                  "File 2 — Title Page (required, editors only)",
+                  ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ],
+                [
+                  "ANONYMOUS_MANUSCRIPT",
+                  "File 3 — Anonymous Manuscript (required for review)",
+                  ".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ],
+                ["SUPPLEMENTARY", "File 4 — Supplementary materials (optional)", undefined],
+                ["FINAL_PDF", "Production Final PDF (after acceptance)", "application/pdf"],
+                ["THUMBNAIL", "Thumbnail (optional)", "image/png,image/jpeg,image/webp"],
               ] as const
             ).map(([fileType, label, accept]) => (
               <label key={fileType} className="block">
@@ -796,7 +828,10 @@ export function ArticleWizard({
                   className={inputClass}
                   type="file"
                   accept={accept}
-                  onChange={(e) => e.target.files?.[0] && upload(fileType, e.target.files[0]).catch((err) => setError(err.message))}
+                  onChange={(e) =>
+                    e.target.files?.[0] &&
+                    upload(fileType, e.target.files[0]).catch((err) => setError(err.message))
+                  }
                 />
                 <span className="mt-1 block text-sm text-ink-600">
                   {fileFor(article, fileType)?.originalName ?? "No file uploaded"}
