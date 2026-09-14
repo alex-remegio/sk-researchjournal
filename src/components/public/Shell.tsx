@@ -51,11 +51,16 @@ export function SiteFooter() {
           <div className="text-sm text-ink-600 md:text-right">
             <p className="font-medium text-navy-700">{BRAND_SHORT}</p>
             <p className="mt-1 max-w-sm md:ml-auto">{BRAND_NAME}</p>
-            <p className="mt-4">
+            <p className="mt-4 flex flex-wrap gap-x-3 gap-y-1 md:justify-end">
+              <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/journals/skrjet/for-authors">
+                For authors
+              </Link>
+              <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/journals/skrjet/editorial-workflow">
+                Guidelines
+              </Link>
               <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/login">
                 Editorial login
               </Link>
-              {" · "}
               <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/search">
                 Search
               </Link>

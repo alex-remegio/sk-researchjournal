@@ -24,6 +24,9 @@ export const BRAND_NAV = [
   { label: "About", href: "/journals/skrjet/about" },
   { label: "Current Issue", href: "/journals/skrjet/current" },
   { label: "Archives", href: "/journals/skrjet/archive" },
+  { label: "Board", href: "/journals/skrjet/board" },
   { label: "Submissions", href: "/journals/skrjet/for-authors" },
+  { label: "Guidelines", href: "/journals/skrjet/editorial-workflow" },
   { label: "Contact", href: "/#contact" },
+  { label: "Login", href: "/login" },
 ] as const;

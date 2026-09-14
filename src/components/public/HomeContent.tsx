@@ -22,6 +22,12 @@ export async function loadHomeCatalog() {
       where: { deletedAt: null, active: true },
       orderBy: { name: "asc" },
     });
+    // Keep SKRJET first on the public home catalog.
+    journals.sort((a, b) => {
+      if (a.websiteSlug === "skrjet") return -1;
+      if (b.websiteSlug === "skrjet") return 1;
+      return a.name.localeCompare(b.name);
+    });
     const articles = await prisma.article.findMany({
       where: { deletedAt: null, status: "PUBLISHED" },
       include: homeArticleInclude,
@@ -74,11 +80,19 @@ export function HomeCatalogSections({
   return (
     <>
       <section className="mt-14">
-        <div className="flex items-end justify-between gap-4">
+        <div className="flex flex-wrap items-end justify-between gap-4">
           <h2 className="font-serif text-2xl">Journals</h2>
-          <Link className="text-sm text-forest-500 underline" href="/journals">
-            View all
-          </Link>
+          <div className="flex flex-wrap gap-3 text-sm">
+            <Link className="font-medium text-forest-600 underline" href="/journals/skrjet/for-authors">
+              For authors
+            </Link>
+            <Link className="font-medium text-forest-600 underline" href="/journals/skrjet/editorial-workflow">
+              Guidelines
+            </Link>
+            <Link className="text-forest-500 underline" href="/journals">
+              View all
+            </Link>
+          </div>
         </div>
         <ul className="mt-4 grid gap-4 md:grid-cols-2">
           {journals.map((journal) => (
