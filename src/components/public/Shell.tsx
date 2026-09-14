@@ -1,7 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/public/SiteHeader";
+import { BrandHero } from "@/components/public/BrandHero";
 import {
   BRAND_CONTACT,
+  BRAND_LOGO,
   BRAND_NAME,
   BRAND_PUBLISHER,
   BRAND_SHORT,
@@ -15,6 +18,13 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl px-4 py-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
           <div>
+            <Image
+              src={BRAND_LOGO}
+              alt={BRAND_SHORT}
+              width={220}
+              height={60}
+              className="mb-4 h-12 w-auto"
+            />
             <p className="text-sm font-bold uppercase tracking-[0.08em] text-navy-700">
               {BRAND_PUBLISHER}
             </p>
@@ -65,12 +75,15 @@ export function PublicShell({
   hero,
 }: {
   children: React.ReactNode;
-  hero?: React.ReactNode;
+  /** Override the default campus banner (e.g. full landing hero). Pass null to hide. */
+  hero?: React.ReactNode | null;
 }) {
+  const banner = hero === undefined ? <BrandHero variant="banner" /> : hero;
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      {hero}
+      {banner}
       <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         {children}
       </main>

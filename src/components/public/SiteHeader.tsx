@@ -15,9 +15,9 @@ export function SiteHeader() {
           <Image
             src={BRAND_LOGO}
             alt={BRAND_SHORT}
-            width={168}
-            height={48}
-            className="h-10 w-auto md:h-12"
+            width={280}
+            height={77}
+            className="h-11 w-auto md:h-14"
             priority
           />
         </Link>
