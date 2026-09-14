@@ -1,17 +1,14 @@
 import Link from "next/link";
 import { PublicShell } from "@/components/public/Shell";
-import {
-  HomeCatalogSections,
-  HomeHero,
-  loadHomeCatalog,
-} from "@/components/public/HomeContent";
+import { BrandHero } from "@/components/public/BrandHero";
+import { HomeCatalogSections, loadHomeCatalog } from "@/components/public/HomeContent";
 
 export default async function HomePage() {
   const result = await loadHomeCatalog();
 
   if (!result.ok) {
     return (
-      <PublicShell>
+      <PublicShell hero={<BrandHero />}>
         <section className="max-w-2xl">
           <h1 className="font-serif text-4xl text-ink-950">Site is up, database is not</h1>
           <p className="mt-4 text-lg text-ink-700">{result.message}</p>
@@ -41,16 +38,7 @@ export default async function HomePage() {
   const { journals, articles } = result.data;
 
   return (
-    <PublicShell>
-      <section>
-        <HomeHero />
-        <p className="mt-6 text-sm text-ink-600">
-          Editorial staff:{" "}
-          <Link className="font-medium text-crimson-700 underline" href="/login">
-            Sign in to the editorial office
-          </Link>
-        </p>
-      </section>
+    <PublicShell hero={<BrandHero />}>
       <HomeCatalogSections journals={journals} articles={articles} />
     </PublicShell>
   );

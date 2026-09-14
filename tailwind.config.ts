@@ -26,7 +26,24 @@ const config: Config = {
           600: "#821d2c",
           700: "#6a1824",
         },
-        paper: "#f7f4ef",
+        navy: {
+          50: "#eef2f7",
+          100: "#d5dee9",
+          500: "#1a3a5c",
+          700: "#0f2740",
+          900: "#0a1a2e",
+        },
+        forest: {
+          500: "#1a5c4a",
+          700: "#0f3d32",
+          900: "#0a2a22",
+        },
+        gold: {
+          400: "#f5d76e",
+          500: "#f0c929",
+          600: "#e0b800",
+        },
+        paper: "#f8faf9",
       },
       fontFamily: {
         serif: ["var(--font-source-serif)", "Georgia", "serif"],

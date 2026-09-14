@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { withDatabase } from "@/lib/db-safe";
 import { SearchBar } from "@/components/public/SearchBar";
 import { ArticleCard } from "@/components/public/ArticleCard";
-import { BRAND_SHORT } from "@/lib/branding";
+import { BRAND_FULL, BRAND_SHORT, BRAND_TAGLINE } from "@/lib/branding";
 
 const homeArticleInclude = {
   journal: true,
@@ -35,16 +35,16 @@ export async function loadHomeCatalog() {
 export function HomeHero({ compact = false }: { compact?: boolean }) {
   return (
     <div className={compact ? "max-w-xl" : "max-w-3xl"}>
-      <p className="text-sm font-medium uppercase tracking-[0.14em] text-crimson-700">{BRAND_SHORT}</p>
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-forest-500">{BRAND_SHORT}</p>
       <h1
-        className={`mt-2 font-serif text-ink-950 ${compact ? "text-3xl md:text-4xl" : "text-4xl md:text-5xl"}`}
+        className={`mt-2 font-sans font-bold uppercase tracking-wide text-navy-900 ${compact ? "text-2xl md:text-3xl" : "text-3xl md:text-4xl"}`}
       >
-        Sultan Kudarat Research Journal of Education and Technology
+        {BRAND_FULL}
       </h1>
-      <p className={`mt-4 text-ink-700 ${compact ? "text-base" : "text-lg"}`}>
-        SKRJET publishes peer-reviewed research in education and technology. Browse current issues,
-        archives, and author profiles. The journal uses a double-blind peer review process and is
-        published bi-annually by Sultan Kudarat State University.
+      <p className={`mt-4 text-ink-700 ${compact ? "text-base" : "text-lg"}`}>{BRAND_TAGLINE}</p>
+      <p className={`mt-3 text-ink-600 ${compact ? "text-sm" : "text-base"}`}>
+        Peer-reviewed research in education and technology. Double-blind review, published
+        bi-annually by Sultan Kudarat State University.
       </p>
       <SearchBar />
       <p className="mt-3 text-sm text-ink-600">
@@ -52,8 +52,12 @@ export function HomeHero({ compact = false }: { compact?: boolean }) {
           Search with filters
         </Link>
         {" · "}
-        <Link className="underline" href="/journals">
-          Browse all journals
+        <Link className="underline" href="/journals/skrjet/current">
+          Current issue
+        </Link>
+        {" · "}
+        <Link className="underline" href="/journals/skrjet/for-authors">
+          Submissions
         </Link>
       </p>
     </div>
@@ -72,7 +76,7 @@ export function HomeCatalogSections({
       <section className="mt-14">
         <div className="flex items-end justify-between gap-4">
           <h2 className="font-serif text-2xl">Journals</h2>
-          <Link className="text-sm text-crimson-700 underline" href="/journals">
+          <Link className="text-sm text-forest-500 underline" href="/journals">
             View all
           </Link>
         </div>

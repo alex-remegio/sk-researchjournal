@@ -18,7 +18,7 @@ export default async function LoginRoute() {
   return (
     <PublicShell>
       {/* IEEE-style: stay on the journal home while signing into editorial services */}
-      <section className="border border-ink-200 bg-gradient-to-br from-ink-50 via-white to-crimson-50/40 px-4 py-8 md:px-8 md:py-10">
+      <section className="border border-ink-200 bg-gradient-to-br from-ink-50 via-white to-forest-500/5 px-4 py-8 md:px-8 md:py-10">
         <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(18rem,22rem)]">
           <div>
             <HomeHero compact />

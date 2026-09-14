@@ -1,67 +1,80 @@
 import Link from "next/link";
-import { SearchBar } from "@/components/public/SearchBar";
-import { BRAND_NAME, BRAND_SHORT } from "@/lib/branding";
+import { SiteHeader } from "@/components/public/SiteHeader";
+import {
+  BRAND_CONTACT,
+  BRAND_NAME,
+  BRAND_PUBLISHER,
+  BRAND_SHORT,
+} from "@/lib/branding";
 
-export function SiteHeader() {
-  return (
-    <header className="border-b border-ink-200 bg-ink-950 text-white">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 md:gap-6">
-        <Link
-          href="/"
-          className="min-w-0 shrink font-serif tracking-tight"
-          title={BRAND_NAME}
-        >
-          <span className="block text-xl md:hidden">{BRAND_SHORT}</span>
-          <span className="hidden text-base leading-snug md:block lg:text-lg">{BRAND_NAME}</span>
-        </Link>
-        <div className="hidden min-w-0 flex-1 justify-center lg:flex">
-          <SearchBar compact />
-        </div>
-        <nav aria-label="Primary" className="flex shrink-0 flex-wrap items-center gap-3 text-sm md:gap-4">
-          <Link className="hover:text-ink-200" href="/journals">
-            Journals
-          </Link>
-          <Link className="hover:text-ink-200" href="/search">
-            Search
-          </Link>
-          <Link className="hover:text-ink-200" href="/login">
-            Editorial login
-          </Link>
-        </nav>
-      </div>
-    </header>
-  );
-}
+export { SiteHeader };
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-ink-200 bg-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-8 text-sm text-ink-600 md:flex-row md:justify-between">
-        <p>
-          © {new Date().getFullYear()} {BRAND_NAME}. Open scholarly publishing.
-        </p>
-        <p>
-          <Link className="underline" href="/robots.txt">
-            Robots
-          </Link>
-          {" · "}
-          <Link className="underline" href="/sitemap.xml">
-            Sitemap
-          </Link>
+    <footer id="contact" className="mt-auto border-t border-ink-100 bg-white">
+      <div className="mx-auto max-w-6xl px-4 py-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.08em] text-navy-700">
+              {BRAND_PUBLISHER}
+            </p>
+            <p className="mt-1 text-sm text-ink-600">{BRAND_CONTACT.address}</p>
+            <p className="mt-3 text-sm text-ink-700">
+              <a className="hover:underline" href={`tel:${BRAND_CONTACT.phone.replace(/\s/g, "")}`}>
+                {BRAND_CONTACT.phone}
+              </a>
+              {" · "}
+              <a className="font-medium text-navy-700 hover:underline" href={`mailto:${BRAND_CONTACT.email}`}>
+                {BRAND_CONTACT.email}
+              </a>
+              {" · "}
+              <a
+                className="hover:underline"
+                href={BRAND_CONTACT.website}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {BRAND_CONTACT.websiteLabel}
+              </a>
+            </p>
+          </div>
+          <div className="text-sm text-ink-600 md:text-right">
+            <p className="font-medium text-navy-700">{BRAND_SHORT}</p>
+            <p className="mt-1 max-w-sm md:ml-auto">{BRAND_NAME}</p>
+            <p className="mt-4">
+              <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/login">
+                Editorial login
+              </Link>
+              {" · "}
+              <Link className="underline decoration-ink-300 underline-offset-2 hover:text-navy-700" href="/search">
+                Search
+              </Link>
+            </p>
+          </div>
+        </div>
+        <p className="mt-8 border-t border-ink-100 pt-6 text-xs text-ink-500">
+          © {new Date().getFullYear()} {BRAND_PUBLISHER}. {BRAND_SHORT} open scholarly publishing.
         </p>
       </div>
     </footer>
   );
 }
 
-export function PublicShell({ children }: { children: React.ReactNode }) {
+export function PublicShell({
+  children,
+  hero,
+}: {
+  children: React.ReactNode;
+  hero?: React.ReactNode;
+}) {
   return (
-    <>
+    <div className="flex min-h-screen flex-col">
       <SiteHeader />
-      <main id="main" className="mx-auto min-h-[70vh] max-w-6xl px-4 py-10">
+      {hero}
+      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">
         {children}
       </main>
       <SiteFooter />
-    </>
+    </div>
   );
 }
