@@ -7,7 +7,7 @@ export function LogoutButton() {
   const router = useRouter();
   return (
     <button
-      className="mt-4 rounded px-3 py-2 text-left text-sm text-ink-300 hover:bg-ink-800"
+      className="mt-4 rounded px-3 py-2 text-left text-sm text-ink-600 hover:bg-ink-50 hover:text-navy-700"
       type="button"
       onClick={async () => {
         try {

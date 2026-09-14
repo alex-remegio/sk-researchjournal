@@ -75,10 +75,10 @@ export function PublicShell({
   hero,
 }: {
   children: React.ReactNode;
-  /** Override the default campus banner (e.g. full landing hero). Pass null to hide. */
+  /** Override the default full campus hero. Pass null to hide. */
   hero?: React.ReactNode | null;
 }) {
-  const banner = hero === undefined ? <BrandHero variant="banner" /> : hero;
+  const banner = hero === undefined ? <BrandHero variant="full" /> : hero;
 
   return (
     <div className="flex min-h-screen flex-col">

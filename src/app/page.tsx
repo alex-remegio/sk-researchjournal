@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { PublicShell } from "@/components/public/Shell";
-import { BrandHero } from "@/components/public/BrandHero";
 import { HomeCatalogSections, loadHomeCatalog } from "@/components/public/HomeContent";
 
 export default async function HomePage() {
@@ -8,7 +7,7 @@ export default async function HomePage() {
 
   if (!result.ok) {
     return (
-      <PublicShell hero={<BrandHero variant="full" />}>
+      <PublicShell>
         <section className="max-w-2xl">
           <h1 className="font-serif text-4xl text-ink-950">Site is up, database is not</h1>
           <p className="mt-4 text-lg text-ink-700">{result.message}</p>
@@ -38,7 +37,7 @@ export default async function HomePage() {
   const { journals, articles } = result.data;
 
   return (
-    <PublicShell hero={<BrandHero variant="full" />}>
+    <PublicShell>
       <HomeCatalogSections journals={journals} articles={articles} />
     </PublicShell>
   );
