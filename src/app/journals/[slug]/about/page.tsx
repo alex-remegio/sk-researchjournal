@@ -39,8 +39,8 @@ export default async function AboutJournal({ params }: { params: Promise<{ slug:
 
             <h2 className="mt-12 font-serif text-2xl">Aims</h2>
             <p className="mt-3 leading-7 text-ink-800">
-              SKRJET aims to promote the culture of research and publication among educators,
-              researchers, practitioners, and students by:
+              SKJEAT welcomes research that is original, methodologically rigorous, and relevant to
+              education, agriculture, technology, or related fields. The journal aims to:
             </p>
             <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-ink-800">
               {SKRJET_AIMS.map((item) => (
@@ -61,8 +61,8 @@ export default async function AboutJournal({ params }: { params: Promise<{ slug:
               ))}
             </ul>
             <p className="mt-4 leading-7 text-ink-800">
-              SKRJET also encourages interdisciplinary research that bridges the fields of education,
-              science, and technology toward sustainable development.
+              SKJEAT particularly encourages interdisciplinary and transdisciplinary studies that connect
+              education, agriculture, science, technology, culture, management, and community development.
             </p>
 
             <h2 className="mt-12 font-serif text-2xl">Article types</h2>

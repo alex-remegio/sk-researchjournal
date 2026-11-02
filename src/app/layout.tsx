@@ -17,8 +17,7 @@ const sourceSerif = Source_Serif_4({
   display: "swap",
 });
 
-const appName =
-  env.APP_NAME === "Journal Platform" || !env.APP_NAME.trim() ? BRAND_NAME : env.APP_NAME;
+const appName = BRAND_NAME;
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.APP_URL),

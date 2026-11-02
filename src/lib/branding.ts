@@ -1,14 +1,14 @@
 /** Safe for client and server — no secrets. */
 export const BRAND_NAME =
-  "Sultan Kudarat Research Journal of Education and Technology (SKRJET)";
-export const BRAND_SHORT = "SKRJET";
+  "Sultan Kudarat Journal of Education, Agriculture, and Technology (SKJEAT)";
+export const BRAND_SHORT = "SKJEAT";
 export const BRAND_FULL =
-  "Sultan Kudarat Research Journal of Education and Technology";
+  "Sultan Kudarat Journal of Education, Agriculture, and Technology";
 export const BRAND_PUBLISHER = "Sultan Kudarat State University";
 export const BRAND_TAGLINE =
-  "Advancing scholarly innovation through research, education, and technology.";
-export const BRAND_MOBILE_TAGLINE = "Research • Education • Technology";
-export const BRAND_LOGO = "/brand/skrjet-logo.png";
+  "Peer-reviewed research in education, agriculture, and technology.";
+export const BRAND_MOBILE_TAGLINE = "Education • Agriculture • Technology";
+export const BRAND_LOGO = "/brand/skjeat-logo.png";
 export const BRAND_HERO = "/brand/skrjet-hero.jpg";
 
 export const BRAND_CONTACT = {

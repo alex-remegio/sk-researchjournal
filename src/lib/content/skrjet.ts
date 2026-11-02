@@ -1,60 +1,74 @@
-/** Official SKRJET journal copy from the founding document. */
+/** Official SKJEAT journal copy from the Guide for Authors, Version 1.0 (2026). */
 
-export const SKRJET_ABOUT_INTRO = `The Sultan Kudarat Research Journal of Education and Technology (SKRJET) is the official bi-annual, peer-reviewed academic publication of Sultan Kudarat State University (SKSU). It serves as a platform for disseminating high-quality scholarly work across diverse disciplines in education, science, and technology.
+export const SKRJET_ABOUT_INTRO = `The Sultan Kudarat Journal of Education, Agriculture, and Technology (SKJEAT) is the official biannual, peer-reviewed academic publication of Sultan Kudarat State University (SKSU).
 
-SKRJET is committed to advancing research and innovation that address the dynamic challenges in education, social development, and technological progress. The journal adheres to a double-blind peer review process, ensuring that all manuscripts meet the highest standards of academic integrity, methodological rigor, and scholarly contribution.`;
+The journal provides a scholarly platform for high-quality research in education, agriculture, food and agricultural systems, technology, and related interdisciplinary fields. SKJEAT seeks to promote research and innovation that address contemporary challenges in education, agricultural productivity and sustainability, food security, rural development, technological advancement, and inclusive sustainable development.
+
+SKJEAT uses double-blind peer review. Manuscripts that pass initial editorial screening are evaluated by at least two independent experts for originality, methodological rigor, significance, clarity, and scholarly contribution. There is no submission or publication charge, and published articles are intended to be openly accessible.`;
 
 export const SKRJET_AIMS = [
-  "Encouraging interdisciplinary collaboration and knowledge sharing;",
-  "Publishing innovative, evidence-based research that contributes to education and technology development;",
-  "Providing a venue for both theoretical and applied studies that inform policy, practice, and pedagogy; and",
-  "Showcasing the research capabilities of local, national, and international scholars.",
+  "Encourage interdisciplinary collaboration and knowledge sharing.",
+  "Publish innovative, evidence-based research contributing to education, agriculture, and technology development.",
+  "Provide a venue for theoretical and applied research that informs policy, practice, and pedagogy.",
+  "Showcase the research capabilities of local, national, and international scholars.",
 ];
 
 export const SKRJET_SCOPE = [
   {
-    title: "Education and Pedagogy",
-    body: "Curriculum innovation, assessment, teacher education, and learning outcomes.",
+    title: "Education, learning, and pedagogy",
+    body: "Curriculum, instruction, assessment, teacher education, inclusive education, and educational policy.",
   },
   {
-    title: "Science and Mathematics Education",
-    body: "Inquiry-based learning, laboratory instruction, computational methods, and STEM integration.",
+    title: "Science, mathematics, and health sciences education",
+    body: "Inquiry-based learning, STEM, health and nutrition education, and science communication.",
   },
   {
-    title: "Filipino and Social Studies",
-    body: "Language and literature studies, cultural education, Philippine history, and sociocultural development.",
+    title: "Language, culture, humanities, and social studies",
+    body: "Language and literature, Philippine history, indigenous knowledge, and cultural heritage.",
   },
   {
-    title: "Management and Entrepreneurship Education",
-    body: "Educational leadership, governance, strategic management, and institutional innovation.",
+    title: "Educational management, leadership, and entrepreneurship",
+    body: "Governance, quality assurance, institutional innovation, and university–community partnerships.",
   },
   {
-    title: "Livelihood and Technology Education",
-    body: "Technical-vocational pedagogy, sustainable livelihood development, and industrial technology innovations.",
+    title: "Livelihood, technical-vocational, and industrial technology education",
+    body: "Skills development, employability, entrepreneurship, and technology and livelihood education.",
   },
   {
-    title: "Information and Communication Technology",
-    body: "ICT in education, digital transformation, artificial intelligence in learning, and data-driven education.",
+    title: "Information and communication technology and digital innovation",
+    body: "Educational technology, artificial intelligence, learning analytics, and digital learning environments.",
+  },
+  {
+    title: "Applied science, technology, and community innovation",
+    body: "Applied research, climate resilience, renewable energy, and community-based innovation.",
+  },
+  {
+    title: "Agriculture, food systems, and rural development",
+    body: "Crop and animal science, fisheries, food technology, agricultural extension, and rural livelihoods.",
+  },
+  {
+    title: "Interdisciplinary and transdisciplinary research",
+    body: "Work that connects education, science, technology, culture, management, and community development.",
   },
 ];
 
 export const SKRJET_ARTICLE_TYPES = [
-  "Research Articles: Original, data-driven studies with clear methodology and findings.",
-  "Review Articles: Analytical and integrative reviews of existing literature and research trends.",
-  "Policy Briefs",
+  "Research Articles: original empirical, theoretical, qualitative, quantitative, mixed-methods, developmental, or design-based research.",
+  "Review Articles: critical, analytical syntheses of existing scholarly literature.",
+  "Policy Briefs: concise, actionable translations of research evidence, normally 3,000–5,000 words.",
 ];
 
 export const SKRJET_PEER_REVIEW =
-  "All submitted manuscripts undergo an initial editorial screening followed by a double-blind peer review by at least two independent experts in the relevant field. Reviewers evaluate manuscripts based on originality, methodological rigor, significance, and clarity. Decisions may include acceptance, minor or major revisions, or rejection. SKRJET upholds ethical standards following the COPE (Committee on Publication Ethics) guidelines and requires all authors to declare potential conflicts of interest.";
+  "Submitted manuscripts undergo initial editorial screening, then double-blind peer review by at least two independent experts. Reviewers do not see author identities, and authors do not see reviewer identities. Decisions may be accept, minor revision, major revision, reject and resubmit, or reject. Authors must disclose conflicts of interest, funding, ethics approval where required, and the use of generative artificial intelligence.";
 
 export const SKRJET_FREQUENCY =
-  "SKRJET is published bi-annually (June and December). Submission and publication are free of charge, and all articles are open access to ensure broad dissemination of research outputs.";
+  "SKJEAT is published twice a year, in June and December. There is no submission or publication fee, and articles are published open access.";
 
 export const SKRJET_INDEPENDENCE =
-  "The editorial board upholds academic freedom, equity, and diversity in the review and publication process. Manuscripts are evaluated solely on scholarly merit without regard to authors’ institutional affiliation, nationality, or background.";
+  "Manuscripts are evaluated on scholarly merit rather than institutional affiliation, nationality, or background, consistent with the journal’s commitment to academic freedom, equity, and diversity.";
 
 export const SKRJET_SPONSOR =
-  "The Sultan Kudarat Research Journal of Education and Technology (SKRJET) is published by the Sultan Kudarat State University, with support from the Office of the Vice President for Research, Extension, and Innovation.";
+  "The Sultan Kudarat Journal of Education, Agriculture, and Technology (SKJEAT) is published by Sultan Kudarat State University, with institutional support from the Office of the Vice President for Research, Extension, and Innovation.";
 
 export const SKRJET_DESCRIPTION_HTML = `<p>${SKRJET_ABOUT_INTRO.split("\n\n").join("</p><p>")}</p>`;
 
@@ -69,67 +83,71 @@ export type FoundingBoardMember = {
 
 export const SKRJET_FOUNDING_BOARD: FoundingBoardMember[] = [
   {
-    name: "Mildred F. Accad, PhD",
+    name: "Cyril John A. Domingo, PhD",
     title: "Editor-in-Chief",
     affiliation: "Sultan Kudarat State University",
+    email: "editorinchief-skrjet@sksu.edu.ph",
     sortOrder: 1,
   },
   {
-    name: "Cyril John A. Domingo, PhD",
+    name: "Amira Mae Castromayor-Gumanoy, PhD",
     title: "Managing Editor",
     affiliation: "Sultan Kudarat State University",
+    email: "managingeditor-skrjet@sksu.edu.ph",
     sortOrder: 2,
   },
   {
-    name: "Section Editor — Education",
-    title: "Section Editor (Education)",
-    affiliation: "To be appointed",
+    name: "Adrian V. Protacio, PhD",
+    title: "Section Editor",
+    affiliation: "Sultan Kudarat State University",
     sortOrder: 3,
   },
   {
-    name: "Section Editor — Technology",
-    title: "Section Editor (Technology)",
-    affiliation: "To be appointed",
+    name: "Fahad Salendab, PhD",
+    title: "Section Editor",
+    affiliation: "Sultan Kudarat State University",
     sortOrder: 4,
   },
   {
-    name: "Charissa De Vera, PhD",
-    title: "Reviewer — TLE",
-    affiliation: "Pangasinan State University",
-    email: "charissadevera@psu.edu.ph",
+    name: "Doreen B. Tampus, PhD",
+    title: "Section Editor",
+    affiliation: "Sultan Kudarat State University",
     sortOrder: 5,
   },
   {
-    name: "Aldrin Bonto, PhD",
-    title: "Reviewer — Science Education",
-    affiliation: "De La Salle University",
-    email: "aldrin.bonto@dlsu.edu.ph",
+    name: "Vincent Louie D. Cabelin, PhD",
+    title: "Section Editor",
+    affiliation: "Sultan Kudarat State University",
     sortOrder: 6,
   },
   {
-    name: "Technical and layout editing",
-    title: "Editorial Support Staff",
-    affiliation: "Metadata, DOI, and web publication management",
+    name: "Maricel L. Amit, PhD",
+    title: "Section Editor",
+    affiliation: "Sultan Kudarat State University",
     sortOrder: 7,
-    biography: "Role: Technical and layout editing, metadata, DOI, and web publication management.",
-  },
-  {
-    name: "Copy editing and proofreading",
-    title: "Editorial Support Staff",
-    affiliation: "Reference management",
-    sortOrder: 8,
-    biography: "Role: Copy editing, proofreading, and reference management.",
   },
   {
     name: "Atty. Cyrus E. Torreña, MNSA, DPA",
-    title: "Advisory Board — University President",
+    title: "Consultant — University President",
+    affiliation: "Sultan Kudarat State University",
+    sortOrder: 8,
+  },
+  {
+    name: "Mildred F. Accad, PhD",
+    title: "Consultant — Vice President for Research, Extension, and Innovation",
     affiliation: "Sultan Kudarat State University",
     sortOrder: 9,
   },
   {
-    name: "Alex Remegio, PhD",
-    title: "Super Admin",
+    name: "Reynaldo H. Dalayap Jr., PhD",
+    title: "Consultant — Vice President for Finance, Administration, and Resource Generation",
     affiliation: "Sultan Kudarat State University",
     sortOrder: 10,
+  },
+  {
+    name: "Allan A. Maglantay, PhD",
+    title: "Consultant — Vice President for Academic Affairs",
+    affiliation: "Sultan Kudarat State University",
+    sortOrder: 11,
   },
 ];

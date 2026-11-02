@@ -49,8 +49,8 @@ export function HomeHero({ compact = false }: { compact?: boolean }) {
       </h1>
       <p className={`mt-4 text-ink-700 ${compact ? "text-base" : "text-lg"}`}>{BRAND_TAGLINE}</p>
       <p className={`mt-3 text-ink-600 ${compact ? "text-sm" : "text-base"}`}>
-        Peer-reviewed research in education and technology. Double-blind review, published
-        bi-annually by Sultan Kudarat State University.
+        Peer-reviewed research in education, agriculture, and technology. Double-blind review,
+        published twice a year by Sultan Kudarat State University.
       </p>
       <SearchBar />
       <p className="mt-3 text-sm text-ink-600">

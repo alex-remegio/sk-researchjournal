@@ -794,7 +794,7 @@ export function ArticleWizard({
         {step === 4 ? (
           <div className="mt-6 space-y-4">
             <div className="border border-ink-200 bg-ink-50 p-4 text-sm text-ink-700">
-              <p className="font-medium text-ink-950">SKRJET four-file submission package</p>
+              <p className="font-medium text-ink-950">SKJEAT four-file submission package</p>
               <p className="mt-2">
                 Cover Letter and Title Page are visible to editors only. The Anonymous Manuscript is
                 what reviewers see. Do not upload the Title Page as the Anonymous Manuscript.

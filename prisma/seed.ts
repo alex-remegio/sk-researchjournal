@@ -91,7 +91,7 @@ async function main() {
     }),
     prisma.user.create({
       data: {
-        name: "Mildred F. Accad, PhD",
+        name: "Cyril John A. Domingo, PhD",
         email: "eic@sksu.edu.ph",
         passwordHash,
         role: Role.EDITOR_IN_CHIEF,
@@ -99,7 +99,7 @@ async function main() {
     }),
     prisma.user.create({
       data: {
-        name: "Cyril John A. Domingo, PhD",
+        name: "Amira Mae Castromayor-Gumanoy, PhD",
         email: "managing@sksu.edu.ph",
         passwordHash,
         role: Role.MANAGING_EDITOR,
@@ -118,8 +118,8 @@ async function main() {
 
   const journal = await prisma.journal.create({
     data: {
-      name: "Sultan Kudarat Research Journal of Education and Technology",
-      abbreviation: "SKRJET",
+      name: "Sultan Kudarat Journal of Education, Agriculture, and Technology",
+      abbreviation: "SKJEAT",
       description: SKRJET_DESCRIPTION_HTML,
       issnPrint: "2049-3630",
       issnOnline: "2049-3649",

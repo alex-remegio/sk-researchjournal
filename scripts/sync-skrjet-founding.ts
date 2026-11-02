@@ -21,8 +21,8 @@ async function main() {
   await prisma.journal.update({
     where: { id: journal.id },
     data: {
-      name: "Sultan Kudarat Research Journal of Education and Technology",
-      abbreviation: "SKRJET",
+      name: "Sultan Kudarat Journal of Education, Agriculture, and Technology",
+      abbreviation: "SKJEAT",
       description: SKRJET_DESCRIPTION_HTML,
       publisher: "Sultan Kudarat State University",
       frequency: "Bi-annual (June and December)",
@@ -31,11 +31,11 @@ async function main() {
 
   await prisma.user.updateMany({
     where: { email: "eic@sksu.edu.ph" },
-    data: { name: "Mildred F. Accad, PhD", role: "EDITOR_IN_CHIEF" },
+    data: { name: "Cyril John A. Domingo, PhD", role: "EDITOR_IN_CHIEF" },
   });
   await prisma.user.updateMany({
     where: { email: "managing@sksu.edu.ph" },
-    data: { name: "Cyril John A. Domingo, PhD", role: "MANAGING_EDITOR" },
+    data: { name: "Amira Mae Castromayor-Gumanoy, PhD", role: "MANAGING_EDITOR" },
   });
   await prisma.user.updateMany({
     where: { email: "superadmin@sksu.edu.ph" },

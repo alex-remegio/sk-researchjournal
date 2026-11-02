@@ -16,7 +16,7 @@ export default async function BoardPage({ params }: { params: Promise<{ slug: st
     <PublicShell>
       <JournalNav slug={slug} name={journal.name} />
       <h1 className="font-serif text-4xl">
-        {slug === "skrjet" ? "Founding editorial board" : "Editorial board"}
+        Editorial board
       </h1>
       <ul className="mt-8 grid gap-6 md:grid-cols-2">
         {journal.editorialBoard.map((member) => (

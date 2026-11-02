@@ -3,7 +3,7 @@ import { z } from "zod";
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   APP_URL: z.string().url().default("http://localhost:3000"),
-  APP_NAME: z.string().default("Sultan Kudarat Research Journal of Education and Technology (SKRJET)"),
+  APP_NAME: z.string().default("Sultan Kudarat Journal of Education, Agriculture, and Technology (SKJEAT)"),
   DATABASE_URL: z.string().min(1).optional(),
   AUTH_SECRET: z.string().min(32),
   AUTH_COOKIE_NAME: z.string().default("journal_session"),
